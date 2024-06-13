@@ -37,7 +37,7 @@ namespace MagicVilla_VillaAPI.Controllers
 			try
 			{
 				_logger.LogInformation("Getting all villas.");
-				IEnumerable<VillaNumber> villaNumberList = await _dbVillaNumber.GetAllAsync();
+				IEnumerable<VillaNumber> villaNumberList = await _dbVillaNumber.GetAllAsync(includeProperties: "Villa");
 				_response.Result = _mapper.Map<List<VillaNumberDTO>>(villaNumberList);
 				_response.StatusCode = System.Net.HttpStatusCode.OK;
 				return Ok(_response);
@@ -97,20 +97,14 @@ namespace MagicVilla_VillaAPI.Controllers
 			{ 
 				if (await _dbVillaNumber.GetAsync(v => v.VillaNo == createDTO.VillaNo) != null)
 				{
-					ModelState.AddModelError("CustomError", "Villa Number already Exists!");
-					_response.StatusCode = System.Net.HttpStatusCode.BadRequest;
-					_response.IsSuccess = false;
-					_response.Result = ModelState;
-					return BadRequest(_response);
+					ModelState.AddModelError("ErrorMessages", "Villa Number already Exists!");
+					return BadRequest(ModelState);
 				}
 
 				if (await _dbVilla.GetAsync(v => v.Id == createDTO.VillaID) == null)
 				{
-					ModelState.AddModelError("CustomError", "Villa ID is Invalid!");
-					_response.StatusCode = System.Net.HttpStatusCode.BadRequest;
-					_response.IsSuccess = false;
-					_response.Result = ModelState;
-					return BadRequest(_response);
+					ModelState.AddModelError("ErrorMessages", "Villa ID is Invalid!");
+					return BadRequest(ModelState);
 				}
 
 				if (createDTO == null)
@@ -193,11 +187,8 @@ namespace MagicVilla_VillaAPI.Controllers
 
 				if (await _dbVilla.GetAsync(v => v.Id == updateDTO.VillaID) == null)
 				{
-					ModelState.AddModelError("CustomError", "Villa ID is Invalid!");
-					_response.StatusCode = System.Net.HttpStatusCode.BadRequest;
-					_response.IsSuccess = false;
-					_response.Result = ModelState;
-					return BadRequest(_response);
+					ModelState.AddModelError("ErrorMessages", "Villa ID is Invalid!");
+					return BadRequest(ModelState);
 				}
 
 				VillaNumber model = _mapper.Map<VillaNumber>(updateDTO);

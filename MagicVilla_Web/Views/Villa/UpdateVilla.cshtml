@@ -1,10 +1,11 @@
-﻿@model MagicVilla_Web.Models.Dto.VillaCreateDTO
+﻿@model MagicVilla_Web.Models.Dto.VillaUpdateDTO
 
-<form asp-action="CreateVilla">
+<form asp-action="UpdateVilla">
 	<br />
 	<div class="container border p-3">
-		<h1 class="text-primary">Create Villa</h1>
-		<hr/>
+		<h1 class="text-primary">Update Villa</h1>
+		<hr />
+		<input hidden asp-for="Id" />
 		<div class="row">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="col-2">
@@ -64,10 +65,10 @@
 			</div>
 
 			<div class="col-5 offset-2">
-				<a asp-action="IndexVillaNumber" asp-controller="VillaNumber" class="btn-primary btn form-control">Back to List</a>
+				<a asp-action="IndexVilla" asp-controller="Villa" class="btn-primary btn form-control">Back to List</a>
 			</div>
 			<div class="col-5">
-				<input type="submit" value="Create" class="btn btn-success form-control" />
+				<input type="submit" value="Update" class="btn btn-success form-control" />
 			</div>
 		</div>
 	</div>
