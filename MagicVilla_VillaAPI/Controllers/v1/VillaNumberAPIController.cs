@@ -82,6 +82,7 @@ namespace MagicVilla_VillaAPI.Controllers.v1
                 if (villaNumber == null)
                 {
                     _response.StatusCode = System.Net.HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
                     return NotFound(_response);
                 }
 
